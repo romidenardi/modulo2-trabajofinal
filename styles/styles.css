@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-    --violeta-oscuro: #4b1c71;
-    --violeta-claro: #7f4ca5;
-    --violeta-palido: #fff0ff;
+    --verde-oscuro: #00523F;
+    --verde-medio: #008767;
+    --verde-claro: #00BD91;
     --semi-blanco: #f8f9fa;
-    --gris-oscuro: #0d0d0d;
-    --gris-claro: #383838;
+    --gris-oscuro: #363636;
+    --gris-medio: #7A7A7A;
+    --gris-claro: #D4D4D4;
 }
 
 * {
@@ -19,19 +20,19 @@
 
 h1 {
     font-size: 2rem;
-    color: var(--violeta-oscuro);
+    color: var(--verde-oscuro);
     font-weight: bold;
 }
 
 h2 {
     font-size: 1.8rem;
-    color: var(--violeta-claro);
+    color: var(--verde-medio);
     font-weight: bold;
 }
 
 h3  {
     font-size: 1.5rem;
-    color: var(--violeta-claro);
+    color: var(--verde-medio);
     font-weight: bold;
 }
 
@@ -64,7 +65,7 @@ a {
 
 a:hover {
     text-decoration: none;
-    color: var(--violeta-claro);
+    color: var(--verde-medio);
 }
 
 small {
