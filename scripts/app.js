@@ -2,13 +2,7 @@
 const reservas = [];
 window.reservas = reservas;
 
-const inputSala = document.getElementById("inputSala");
-const inputFecha = document.getElementById("inputFecha");
-const inputHoraInicio = document.getElementById("inputHoraInicio");
-const inputHoraFin = document.getElementById("inputHoraFin");
-const inputTema = document.getElementById("inputTema");
-const inputUsuario = document.getElementById("inputUsuario");
-const boton = document.getElementById("btnCrearReserva");
+const form = document.getElementById("formReserva");
 const lista = document.getElementById("listaReservas");
 
 function render() {
@@ -20,12 +14,12 @@ function render() {
         const elementoLista = document.createElement("li");
 
         const span = document.createElement("span");
-        span.textContent = `${reserva.sala} | 
-                            ${reserva.fecha} | 
-                            ${reserva.horaInicio} - ${reserva.horaFin} | 
-                            ${reserva.tema} | 
-                            ${reserva.usuario}`;
 
+        const listaServicios = reserva.servicios.length
+        ? reserva.servicios.join(", ")
+        : "Ninguno";
+
+        span.textContent = `${reserva.sala} | ${reserva.fecha} | ${reserva.horaInicio} - ${reserva.horaFin} | ${reserva.tema} |${reserva.usuario} | Servicios: ${listaServicios} | ${reserva.comentarios}`;
         const btnEditarReserva = document.createElement("button");
         btnEditarReserva.textContent = "Editar";
 
@@ -78,17 +72,16 @@ function render() {
 
 function crearReserva() {
 
-    const sala = inputSala.value;
-    const fecha = inputFecha.value;
-    const horaInicio = inputHoraInicio.value;
-    const horaFin = inputHoraFin.value;
-    const tema = inputTema.value;
-    const usuario = inputUsuario.value;
+    const datos = new FormData(form);
 
-    if (!sala || !fecha || !horaInicio || !horaFin || !tema || !usuario) {
-        alert("Por favor completá todos los campos");
-        return;
-    }
+    const sala = datos.get("sala");
+    const fecha = datos.get("fecha");
+    const horaInicio = datos.get("inicio");
+    const horaFin = datos.get("fin");
+    const tema = datos.get("tema");
+    const usuario = datos.get("usuario");
+    const servicios = datos.getAll("servicios");
+    const comentarios = datos.get("comentarios") || "Sin comentarios";
 
     const reserva = {
         id: Date.now(),
@@ -97,21 +90,19 @@ function crearReserva() {
         horaInicio,
         horaFin,
         tema,
-        usuario
+        usuario,
+        servicios,
+        comentarios
     };
 
     reservas.push(reserva);
 
     render();
 
-    inputSala.value = "";
-    inputFecha.value = "";
-    inputHoraInicio.value = "";
-    inputHoraFin.value = "";
-    inputTema.value = "";
-    inputUsuario.value = "";
-
-    inputSala.focus();
-   
+    form.reset();
 }
-boton.addEventListener("click", crearReserva);
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    crearReserva();
+});
