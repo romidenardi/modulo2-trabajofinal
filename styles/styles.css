@@ -70,5 +70,33 @@ a:hover {
 
 small {
     font-size: 0.8rem;
-    color: var(--semi-blanco);
+    color: var(--gris-claro);
+}
+
+input, textarea {
+    border-radius: 0.375rem;
+    border: 1px solid var(--gris-oscuro);
+    padding: 0.3rem;
+}
+
+textarea {
+    max-width: 100%;
+}
+
+button {
+    padding: 0.8rem;
+    background-color: var(--verde-oscuro);
+    color:  var(--gris-claro);
+    border: none;
+    border-radius: 0.375rem;
+}
+
+button:hover {
+    background-color: var(--verde-medio);
+    color:  var(--gris-claro);
+}
+
+button:disabled {
+    background-color: var(--gris-oscuro);
+    color:  var(--gris-claro);
 }
