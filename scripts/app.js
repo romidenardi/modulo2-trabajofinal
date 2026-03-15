@@ -2,7 +2,12 @@
 const reservas = [];
 window.reservas = reservas;
 
-const input = document.getElementById("crearReserva");
+const inputSala = document.getElementById("inputSala");
+const inputFecha = document.getElementById("inputFecha");
+const inputHoraInicio = document.getElementById("inputHoraInicio");
+const inputHoraFin = document.getElementById("inputHoraFin");
+const inputTema = document.getElementById("inputTema");
+const inputUsuario = document.getElementById("inputUsuario");
 const boton = document.getElementById("btnCrearReserva");
 const lista = document.getElementById("listaReservas");
 
@@ -10,23 +15,28 @@ function render() {
 
     lista.innerHTML = "";
 
-    reservas.forEach((reserva, index) => {
+    reservas.forEach((reserva) => {
 
         const elementoLista = document.createElement("li");
 
         const span = document.createElement("span");
-        span.textContent = reserva;
+        span.textContent = `${reserva.sala} | 
+                            ${reserva.fecha} | 
+                            ${reserva.horaInicio} - ${reserva.horaFin} | 
+                            ${reserva.tema} | 
+                            ${reserva.usuario}`;
 
         const btnEditarReserva = document.createElement("button");
         btnEditarReserva.textContent = "Editar";
 
         btnEditarReserva.addEventListener("click", () => {
-            const nuevoTexto = prompt("Editar reserva:", reserva);
-            if (nuevoTexto) {
-                reservas[index] = nuevoTexto.trim();
+            const nuevoTema = prompt("Editar tema:", reserva.tema);
+            if (nuevoTema && nuevoTema.trim() !== "") {
+                const r = reservas.find(r => r.id === reserva.id);
+                r.tema = nuevoTema.trim();
                 render();
-            }
-        });
+                }
+            });
 
         const btnEliminarReserva = document.createElement("button");
         btnEliminarReserva.textContent = "Eliminar";
@@ -43,10 +53,10 @@ function render() {
             span.textContent = "Eliminando...";
             btnDeshacerEliminacion.style.display = "inline";
             timeoutEliminarReserva = setTimeout(() => {
-                reservas.splice(index, 1);
+                const i = reservas.findIndex(r => r.id === reserva.id);
+                reservas.splice(i, 1);
                 render();
             }, 5000);
-
         });
 
         btnDeshacerEliminacion.addEventListener("click", () => {
@@ -67,18 +77,41 @@ function render() {
 }
 
 function crearReserva() {
-    const texto = input.value.trim();
-    if (texto) {
-        reservas.push(texto);
-        render();
-        input.value = "";
+
+    const sala = inputSala.value;
+    const fecha = inputFecha.value;
+    const horaInicio = inputHoraInicio.value;
+    const horaFin = inputHoraFin.value;
+    const tema = inputTema.value;
+    const usuario = inputUsuario.value;
+
+    if (!sala || !fecha || !horaInicio || !horaFin || !tema || !usuario) {
+        alert("Por favor completá todos los campos");
+        return;
     }
+
+    const reserva = {
+        id: Date.now(),
+        sala,
+        fecha,
+        horaInicio,
+        horaFin,
+        tema,
+        usuario
+    };
+
+    reservas.push(reserva);
+
+    render();
+
+    inputSala.value = "";
+    inputFecha.value = "";
+    inputHoraInicio.value = "";
+    inputHoraFin.value = "";
+    inputTema.value = "";
+    inputUsuario.value = "";
+
+    inputSala.focus();
+   
 }
-
-input.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-        crearReserva();
-    }
-});
-
 boton.addEventListener("click", crearReserva);
