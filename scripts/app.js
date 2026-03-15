@@ -9,6 +9,13 @@ function render() {
 
     lista.innerHTML = "";
 
+    reservas.sort((a, b) => {
+        if (a.fecha === b.fecha) {
+            return a.horaInicio.localeCompare(b.horaInicio);
+        }
+        return a.fecha.localeCompare(b.fecha);
+    });
+
     reservas.forEach((reserva) => {
 
         const elementoLista = document.createElement("li");
@@ -19,7 +26,11 @@ function render() {
         ? reserva.servicios.join(", ")
         : "Ninguno";
 
-        span.textContent = `${reserva.sala} | ${reserva.fecha} | ${reserva.horaInicio} - ${reserva.horaFin} | ${reserva.tema} |${reserva.usuario} | Servicios: ${listaServicios} | ${reserva.comentarios}`;
+        span.innerHTML = `<strong>${reserva.sala}</strong> | ${reserva.fecha} | ${reserva.horaInicio} - ${reserva.horaFin}<br>
+                            Tema: ${reserva.tema}<br>
+                            Usuario: ${reserva.usuario}<br>
+                            Servicios: ${listaServicios}<br>
+                            Comentarios: ${reserva.comentarios}`;
         const btnEditarReserva = document.createElement("button");
         btnEditarReserva.textContent = "Editar";
 
@@ -82,6 +93,31 @@ function crearReserva() {
     const usuario = datos.get("usuario");
     const servicios = datos.getAll("servicios");
     const comentarios = datos.get("comentarios") || "Sin comentarios";
+
+    const hoy = new Date();
+    hoy.setHours(0,0,0,0);
+    const fechaReserva = new Date(fecha);
+    if (fechaReserva < hoy) {
+        alert("La fecha de reserva debe ser igual o posterior a la fecha del día");
+        return;
+    }
+
+    if (horaFin <= horaInicio) {
+        alert("La hora de finalización debe ser posterior a la de inicio.");
+        return;
+    }
+
+    const hayConflicto = reservas.some(r =>
+        r.sala === sala &&
+        r.fecha === fecha &&
+        horaInicio < r.horaFin &&
+        horaFin > r.horaInicio
+    );
+
+    if (hayConflicto) {
+        alert(`La sala ${sala} ya tiene una reserva el ${fecha} entre ${horaInicio} y ${horaFin}.`);        
+        return;
+    }
 
     const reserva = {
         id: Date.now(),
