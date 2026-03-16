@@ -13,7 +13,6 @@
 * {
     font-family: Montserrat;
     box-sizing: border-box;
-    margin: 0;
     padding: 0;
     color: var(--gris-oscuro);
 }
@@ -22,35 +21,40 @@ h1 {
     font-size: 2rem;
     color: var(--verde-oscuro);
     font-weight: bold;
+    margin: 1.8rem 0.8rem 1.8rem 0.8rem; 
 }
 
 h2 {
     font-size: 1.8rem;
     color: var(--verde-medio);
     font-weight: bold;
+    margin: 0.8rem;
 }
 
 h3  {
     font-size: 1.5rem;
     color: var(--verde-medio);
     font-weight: bold;
+    margin: 0.8rem;
 }
 
-h4 {
+h4, legend {
     font-size: 1.2rem;
     color: var(--gris-oscuro);
     font-weight: bold;
+    margin: 0.8rem;
 }
 
 h5 {
-    font-size: 1.1rem;
+    font-size: 1.0.8rem;
     color: var(--gris-claro);
     font-weight: bold;
+    margin: 0.8rem;
 }
 
-ul, p {
+ul, p, label {
     font-size: 1.rem;
-    color: var(--gris-oscuro);
+    margin: 0.8rem;
 }
 
 ul {
@@ -73,18 +77,24 @@ small {
     color: var(--gris-claro);
 }
 
-fieldset, legend, input {
-    margin-bottom: 0.8rem;
+fieldset, legend, .botones-form {
+    margin: 0.8rem;
 }
 
 input, textarea {
     border-radius: 0.375rem;
     border: 1px solid var(--gris-oscuro);
     padding: 0.3rem;
+    margin-left: 0.8rem;
+    margin-bottom: 0.8rem;
 }
 
 textarea {
     max-width: 100%;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  accent-color: var(--verde-oscuro);
 }
 
 button {
@@ -93,6 +103,7 @@ button {
     color:  var(--gris-claro);
     border: none;
     border-radius: 0.375rem;
+    margin: 0.5rem;
 }
 
 button:hover {
@@ -103,6 +114,23 @@ button:hover {
 button:disabled {
     background-color: var(--gris-oscuro);
     color:  var(--gris-claro);
+}
+
+.imagen-principal {
+    width:300px; 
+    display:block;
+    margin-bottom:1em;
+    border-radius: 0.375rem;
+}
+
+.miniatura {
+    width: 5rem;
+    border-radius: 0.375rem;
+    margin-right: 0.5rem;
+}
+
+input[type="radio"]:checked + .miniatura{
+    border: 1px solid var(--verde-oscuro);
 }
 
 nav {
@@ -125,4 +153,9 @@ footer {
     padding: 2rem;
     background-color: var(--verde-oscuro);
     text-align: center;
+}
+
+.seleccion-sala {
+    display:flex;
+    flex-direction: row;
 }

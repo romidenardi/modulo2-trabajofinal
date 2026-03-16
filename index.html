@@ -41,14 +41,28 @@
         <section>
             <h2>Crear reserva</h2>
             <form id="formReserva">
-                <fieldset>
+                 <fieldset>
                     <legend>Seleccioná la sala</legend>
-                    <input id="salaSum" type="radio" name="sala" value="SUM" required>
-                    <label for="salaSum">SUM Osvaldo Acastello</label><br>
-                    <input id="salaAuditorio" type="radio" name="sala" value="Auditorio">
-                    <label for="salaAuditorio">Auditorio</label><br>
-                    <input id="salaComision" type="radio" name="sala" value="Comisión Directiva">
-                    <label for="salaComision">Sala de Comisión Directiva</label><br>
+                    <div class="seleccion-sala">
+                        <img class="imagen-principal" id="imagenPrincipal" src="/assets/sum.JPG" alt="SUM">
+                        <div class="salas">
+                            <label for="salaSum">
+                                <input id="salaSum" type="radio" name="sala" value="SUM" required>
+                                <img class="miniatura" data-radio="salaSum" src="/assets/sum.JPG" alt="SUM">
+                                SUM Osvaldo Acastello
+                            </label><br>
+                            <label for="salaAuditorio">
+                                <input id="salaAuditorio" type="radio" name="sala" value="Auditorio">
+                                <img class="miniatura" data-radio="salaAuditorio" src="/assets/auditorio.JPG" alt="Auditorio">
+                                Auditorio
+                            </label><br>
+                            <label for="salaComision">
+                                <input id="salaComision" type="radio" name="sala" value="Comisión Directiva">
+                                <img class="miniatura" data-radio="salaComision" src="/assets/comision-directiva.JPG" alt="Comisión Directiva">
+                                Sala de Comisión Directiva
+                            </label><br>                     
+                        </div>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <legend>Completá los datos de la reserva</legend>
@@ -59,9 +73,9 @@
                     <label for="fin">Hora de finalización</label>
                     <input id="inputHoraFin" type="time" name="fin" required><br>
                     <label for="tema">Tema</label>
-                    <input id="inputTema" type="text" name="tema" required placeholder="Tema"><br>
+                    <input id="inputTema" type="text" name="tema" required placeholder="Tema del evento"><br>
                     <label for="usuario">Usuario</label>
-                    <input id="inputUsuario" type="text" name="usuario" required placeholder="Usuario"><br>
+                    <input id="inputUsuario" type="text" name="usuario" required placeholder="Usuario asignado"><br>
                 </fieldset>
                 <fieldset>
                     <legend>Seleccioná los servicios de cocina contratados</legend>
@@ -74,15 +88,15 @@
                     <input id="servAlmuerzo" type="checkbox" name="servicios" value="Almuerzo">
                     <label for="servAlmuerzo">Almuerzo</label><br>
                     <input id="servCena" type="checkbox" name="servicios" value="Cena">
-                    <label for="servCena">Cena</label><br>
+                    <label for="servCena">Cena</label><br>                    
                 </fieldset>
                 <fieldset>
                     <label for="comentarios">Comentarios</label><br>
-                    <textarea id="inputComentarios" name="comentarios" rows="4" cols="70" placeholder="Comentarios"></textarea>
+                    <textarea id="inputComentarios" name="comentarios" rows="4" cols="70" placeholder="Comentarios adicionales"></textarea>
                 </fieldset>
                 <fieldset>
                     <legend>Revisá y enviá el formulario</legend>
-                    <div>
+                    <div class="botones-form">
                         <button type="reset" aria-label="Resetear formulario">Resetear</button>
                         <button id="btnCrearReserva" type="submit" aria-label="Enviar formulario">Reservar</button>
                     </div>

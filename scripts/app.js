@@ -70,8 +70,8 @@ function render() {
             btnDeshacerEliminacion.style.display = "none";
         });
 
-        elementoLista.appendChild(span);
-        elementoLista.appendChild(btnEditarReserva);
+        elementoLista.appendChild(span); 
+        elementoLista.appendChild(btnEditarReserva); 
         elementoLista.appendChild(btnEliminarReserva);
         elementoLista.appendChild(btnDeshacerEliminacion);
 
@@ -141,4 +141,16 @@ function crearReserva() {
 form.addEventListener("submit", (event) => {
     event.preventDefault();
     crearReserva();
+});
+
+const imagenPrincipal = document.getElementById("imagenPrincipal");
+
+document.querySelectorAll('input[name="sala"]').forEach(radio => {
+    radio.addEventListener("change", function () {
+        const label = this.closest("label");
+        const img = label.querySelector(".miniatura");
+        if (img) {
+            imagenPrincipal.src = img.src;
+        }
+    });
 });
