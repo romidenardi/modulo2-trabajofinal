@@ -52,7 +52,7 @@ h5 {
     margin: 0.8rem;
 }
 
-ul, p, label {
+ul, p {
     font-size: 1.rem;
     margin: 0.8rem;
 }
@@ -95,6 +95,13 @@ textarea {
 
 input[type="radio"], input[type="checkbox"] {
   accent-color: var(--verde-oscuro);
+  margin-right: 0.3rem;
+}
+
+label {
+    font-size: 1.rem;
+    margin-right: 0rem;
+    margin-bottom: 0.8rem;
 }
 
 button {
@@ -116,15 +123,32 @@ button:disabled {
     color:  var(--gris-claro);
 }
 
+.seleccion-sala {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .seleccion-sala {
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+    }
+}
+
 .imagen-principal {
-    width:300px; 
-    display:block;
-    margin-bottom:1em;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    display: block;
     border-radius: 0.375rem;
 }
 
 .miniatura {
     width: 5rem;
+    height: auto;
     border-radius: 0.375rem;
     margin-right: 0.5rem;
 }
@@ -155,7 +179,3 @@ footer {
     text-align: center;
 }
 
-.seleccion-sala {
-    display:flex;
-    flex-direction: row;
-}
