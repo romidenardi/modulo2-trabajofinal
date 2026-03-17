@@ -1,3 +1,5 @@
+import Reserva from "./reserva.js";
+
 export default class Calendario {
 
     constructor(elementoLista, onChange) {
@@ -18,6 +20,9 @@ export default class Calendario {
 
     eliminarReserva(id) {
         this.reservas = this.reservas.filter(r => r.id !== id);
+        if (this.onChange) {
+            this.onChange(this.reservas);
+        }
         this.render();    
     }
 
@@ -45,12 +50,17 @@ export default class Calendario {
             btnEditarReserva.addEventListener("click", () => {
                 const nuevoTema = prompt("Editar tema:", reserva.tema);
                 if (nuevoTema && nuevoTema.trim() !== "") {
-                    const r = this.reservas.find(r => r.id === reserva.id);
-                    r.tema = nuevoTema.trim();
-                    this.onChange(this.reservas);
+                    this.reservas = this.reservas.map(r => 
+                        r.id === reserva.id
+                            ? new Reserva({ ...r, tema: nuevoTema.trim() })
+                            : r
+                    );
+                    if (this.onChange) {
+                        this.onChange(this.reservas);
+                    }
                     this.render();
-                   }
-                });
+                }
+            });
 
             const btnEliminarReserva = document.createElement("button");
             btnEliminarReserva.textContent = "Eliminar";
@@ -59,23 +69,24 @@ export default class Calendario {
             btnDeshacerEliminacion.textContent = "Deshacer";
             btnDeshacerEliminacion.style.display = "none";
 
-            let textoActual;
             let timeoutEliminarReserva;
 
             btnEliminarReserva.addEventListener("click", () => {
-                textoActual = span.innerHTML;
                 span.innerHTML = "Eliminando...";
+                btnEliminarReserva.disabled = true;
+                btnEditarReserva.disabled = true;
                 btnDeshacerEliminacion.style.display = "inline";
                 timeoutEliminarReserva = setTimeout(() => {
                     this.eliminarReserva(reserva.id);
                 }, 5000);
             });
 
-            btnDeshacerEliminacion.addEventListener("click", () => {
-                clearTimeout(timeoutEliminarReserva);
-                span.innerHTML = textoActual;
-                btnDeshacerEliminacion.style.display = "none";
-            });
+            btnDeshacerEliminacion.onclick = () => {
+                if (timeoutEliminarReserva) {
+                    clearTimeout(timeoutEliminarReserva);
+                }
+                this.render();
+            };
 
             li.appendChild(span); 
             li.appendChild(btnEditarReserva); 

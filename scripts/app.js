@@ -49,6 +49,8 @@ class App {
 
     crearReserva() {
 
+        if (!this.form) return;
+
         const datos = new FormData(this.form);
 
         const reserva = new Reserva ({
