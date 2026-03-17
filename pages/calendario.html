@@ -42,78 +42,7 @@
     <main>
         <section>
             <ul id="listaReservas"></ul>
-        </section> 
-        <section>
-            <div class="modal fade" id="modalEditar" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">                    
-                    <div class="modal-header">
-                        <h5 class="modal-title">Editar reserva</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="formEditar">
-                        <input type="hidden" name="id">
-                        <div class="mb-2">
-                            <select class="form-select" name="sala">
-                            <option value="">Seleccionar sala</option>
-                            <option value="SUM Osvaldo Acastello">SUM Osvaldo Acastello</option>
-                            <option value="Auditorio">Auditorio</option>
-                            <option value="Sala de Comisión Directiva">Sala de Comisión Directiva</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label>Fecha</label>
-                            <input type="date" class="form-control" name="fecha">
-                        </div>
-                        <div class="mb-2">
-                            <label>Inicio</label>
-                            <input type="time" class="form-control" name="inicio">
-                        </div>
-                        <div class="mb-2">
-                            <label>Fin</label>
-                            <input type="time" class="form-control" name="fin">
-                        </div>
-                        <div class="mb-2">
-                            <label>Tema</label>
-                            <input type="text" class="form-control" name="tema">
-                        </div>
-                        <div class="mb-2">
-                            <label>Usuario</label>
-                            <input type="text" class="form-control" name="usuario">
-                        </div>
-                        <div class="mb-2">
-                            <label>Servicios</label>
-                            <div>
-                                <input type="checkbox" name="servicios" value="Cafetería"> Cafetería
-                            </div>
-                            <div>
-                                <input type="checkbox" name="servicios" value="Desayuno"> Desayuno
-                            </div>
-                            <div>
-                                <input type="checkbox" name="servicios" value="Merienda"> Merienda
-                            </div>
-                            <div>
-                                <input type="checkbox" name="servicios" value="Almuerzo"> Almuerzo
-                            </div>
-                            <div>
-                                <input type="checkbox" name="servicios" value="Cena"> Cena
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <label>Comentarios</label>
-                            <textarea class="form-control" name="comentarios"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-2">
-                            Guardar cambios
-                        </button>
-                        </form>
-                    </div>
-                    </div>
-                </div>
-                </div>
         </section>
-
     </main>
     <footer>
         <div>

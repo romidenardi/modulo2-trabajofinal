@@ -60,6 +60,13 @@ class App {
                 this.cargarReservaEnFormulario(reservaAEditar);
                 localStorage.removeItem("reservaAEditar");
             }
+
+        const btnCancelarEdicion = document.getElementById("btnCancelarEdicion");
+            if (btnCancelarEdicion) {
+                btnCancelarEdicion.addEventListener("click", () => {
+                    this.cancelarEdicion();
+                });
+            }
     }
 
     crearReserva() {
@@ -102,6 +109,7 @@ class App {
         this.form.reset();
         this.form.elements["id"].value = "";
         document.getElementById("btnCrearReserva").textContent = "Reservar";
+        document.getElementById("btnCancelarEdicion").style.display = "none";
 
     }
 
@@ -174,6 +182,13 @@ class App {
             return false;
         }
         return true;
+    }
+
+    cancelarEdicion() {
+        this.form.reset();
+        this.form.elements["id"].value = "";
+        document.getElementById("btnCrearReserva").textContent = "Reservar";
+        document.getElementById("btnCancelarEdicion").style.display = "inline";
     }
 }
 
