@@ -20,7 +20,15 @@ Crear una aplicación para la reserva y consulta de la disponibilidad de las sal
 ## Tecnologías y librerías utilizadas
 ***
 
-* HTML
-* CSS
-* Bootstrap
-* JavaScript
+* HTML.
+* CSS.
+* Bootstrap.
+* JavaScript.
+
+### Utilización de IA
+***
+
+Se utilizó IA generativa para:
+* Crear clases y funciones que resultaban complejas.
+* Lograr que las reservas queden guardadas en LocalStorage para su manipulación.
+* Mejorar la funcionalidad y usabilidad del proyecto en general.

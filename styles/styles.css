@@ -81,7 +81,7 @@ fieldset, legend, .botones-form {
     margin: 0.8rem;
 }
 
-input, textarea {
+input, textarea, select {
     border-radius: 0.375rem;
     border: 1px solid var(--gris-oscuro);
     padding: 0.3rem;
@@ -105,7 +105,7 @@ label {
     margin-bottom: 0.8rem;
 }
 
-button {
+button, .botones {
     padding: 0.8rem;
     background-color: var(--verde-oscuro);
     color:  var(--gris-claro);
@@ -114,9 +114,12 @@ button {
     margin: 0.5rem;
 }
 
-button:hover {
+button:hover .botones:hover {
     background-color: var(--verde-medio);
-    color:  var(--gris-claro);
+}
+
+button a:hover .botones a:hover {
+    color: var(--verde-claro);
 }
 
 button:disabled {
@@ -157,6 +160,15 @@ button:disabled {
 
 input[type="radio"]:checked + .miniatura{
     border: 1px solid var(--verde-oscuro);
+}
+
+.alerta {
+    font-size: 1.2rem;
+    color: #FF746C;
+    font-weight: bold;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    margin-left: 1.6rem;
 }
 
 nav {

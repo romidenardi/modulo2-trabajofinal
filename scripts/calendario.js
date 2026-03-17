@@ -7,6 +7,10 @@ export default class Calendario {
         this.reservas = [];
         this.onChange = onChange;
         this.onEdit = onEdit;
+        this.filtroSala = document.getElementById("filtroSala");
+        this.filtroFecha = document.getElementById("filtroFecha");
+        this.filtroSala?.addEventListener("change", () => this.render());
+        this.filtroFecha?.addEventListener("change", () => this.render());
     }
 
     setearReservas(reservas) {
@@ -26,7 +30,26 @@ export default class Calendario {
 
         this.lista.innerHTML = "";
 
-        this.reservas
+        let reservasFiltradas = [...this.reservas];
+
+        if (this.filtroSala?.value) {
+            reservasFiltradas = reservasFiltradas.filter(r =>
+                r.sala === this.filtroSala.value
+            );
+        }
+
+        if (this.filtroFecha?.value) {
+            reservasFiltradas = reservasFiltradas.filter(r =>
+                r.fecha === this.filtroFecha.value
+            );
+        }
+
+        if (reservasFiltradas.length === 0) {
+            this.lista.innerHTML = "<p>No hay reservas vigentes</p>";
+            return;
+        }
+
+        reservasFiltradas
             .sort((a, b) => a.fechaHoraInicio.localeCompare(b.fechaHoraInicio))
             .forEach(reserva => {
                 const li = document.createElement("li");
