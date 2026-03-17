@@ -6,8 +6,6 @@ class App {
     constructor() {
 
         this.form = document.getElementById("formReserva");
-        this.formEditar = document.getElementById("formEditar");
-        this.modal = null;
 
         const lista = document.getElementById("listaReservas");
 
@@ -20,7 +18,7 @@ class App {
                     this.reservas = reservasActualizadas;
                     localStorage.setItem("reservas", JSON.stringify(this.reservas));
                 },
-                (reserva) => this.abrirModalEdicion(reserva)
+                (reserva) => this.cargarReservaEnFormulario(reserva)
             )
             : null;
 
@@ -33,15 +31,6 @@ class App {
             this.form.addEventListener("submit", (event) => {
                 event.preventDefault();
                 this.crearReserva();
-            });
-        }
-
-        if (this.formEditar) {
-            this.modal = new bootstrap.Modal(document.getElementById("modalEditar"));
-
-            this.formEditar.addEventListener("submit", (e) => {
-                e.preventDefault();
-                this.guardarEdicion();
             });
         }
 
@@ -65,6 +54,12 @@ class App {
                 }
             });
         });
+
+        const reservaAEditar = JSON.parse(localStorage.getItem("reservaAEditar"));
+            if (reservaAEditar && this.form) {
+                this.cargarReservaEnFormulario(reservaAEditar);
+                localStorage.removeItem("reservaAEditar");
+            }
     }
 
     crearReserva() {
@@ -72,9 +67,10 @@ class App {
         if (!this.form) return;
 
         const datos = new FormData(this.form);
+        const id = datos.get("id");
 
         const reserva = new Reserva({
-            id: Date.now(),
+            id: id ? Number(id) : Date.now(),
             sala: datos.get("sala"),
             fecha: datos.get("fecha"),
             horaInicio: datos.get("inicio"),
@@ -82,14 +78,20 @@ class App {
             tema: datos.get("tema"),
             usuario: datos.get("usuario"),
             servicios: datos.getAll("servicios"),
-            comentarios: datos.get("comentarios")
+            comentarios: datos.get("comentarios") || "Sin comentarios"
         });
 
         if (!this.validarFecha(reserva)) return;
         if (!this.validarHora(reserva)) return;
         if (!this.validarConflicto(reserva)) return;
 
-        this.reservas.push(reserva);
+        if (id) {
+            this.reservas = this.reservas.map(r =>
+                r.id === Number(id) ? reserva : r
+            );
+        } else {
+            this.reservas.push(reserva);
+        }
 
         localStorage.setItem("reservas", JSON.stringify(this.reservas));
 
@@ -98,59 +100,45 @@ class App {
         }
 
         this.form.reset();
+        this.form.elements["id"].value = "";
+        document.getElementById("btnCrearReserva").textContent = "Reservar";
+
     }
 
-    abrirModalEdicion(reserva) {
+    cargarReservaEnFormulario(reserva) {
 
-    if (!this.formEditar) return;
+        this.form.elements["id"].value = reserva.id;
 
-    this.formEditar.elements["id"].value = reserva.id;
-    this.formEditar.elements["sala"].value = reserva.sala;
-    this.formEditar.elements["fecha"].value = reserva.fecha;
-    this.formEditar.elements["inicio"].value = reserva.horaInicio;
-    this.formEditar.elements["fin"].value = reserva.horaFin;
-    this.formEditar.elements["tema"].value = reserva.tema;
-    this.formEditar.elements["usuario"].value = reserva.usuario;
-    this.formEditar.elements["comentarios"].value = reserva.comentarios;
-    this.formEditar.querySelectorAll('input[name="servicios"]').forEach(chk => {
-        chk.checked = reserva.servicios.includes(chk.value);
+        if (!this.form) return;
+
+        const radios = this.form.querySelectorAll('input[name="sala"]');
+            radios.forEach(radio => {
+                if (radio.value === reserva.sala) {
+                    radio.checked = true;
+
+                    const label = radio.closest("label");
+                    const img = label?.querySelector(".miniatura");
+                    const imagenPrincipal = document.getElementById("imagenPrincipal");
+
+                    if (img && imagenPrincipal) {
+                        imagenPrincipal.src = img.src;
+                    }
+                }
+            });
+
+        this.form.elements["fecha"].value = reserva.fecha;
+        this.form.elements["inicio"].value = reserva.horaInicio;
+        this.form.elements["fin"].value = reserva.horaFin;
+        this.form.elements["tema"].value = reserva.tema;
+        this.form.elements["usuario"].value = reserva.usuario;
+        this.form.elements["comentarios"].value = reserva.comentarios;
+        this.form.querySelectorAll('input[name="servicios"]').forEach(chk => {
+            chk.checked = reserva.servicios.includes(chk.value);
         });
-    this.modal.show();
 
-    }
-
-    guardarEdicion() {
-        const datos = new FormData(this.formEditar);
-
-        const reservaEditada = new Reserva({
-            id: Number(datos.get("id")),
-            sala: datos.get("sala"),
-            fecha: datos.get("fecha"),
-            horaInicio: datos.get("inicio"),
-            horaFin: datos.get("fin"),
-            tema: datos.get("tema"),
-            usuario: datos.get("usuario"),
-            servicios: datos.getAll("servicios"),
-            comentarios: datos.get("comentarios")
-        });
-
-        if (!this.validarFecha(reservaEditada)) return;
-        if (!this.validarHora(reservaEditada)) return;
-        if (!this.validarConflicto(reservaEditada)) return;
-
-        this.reservas = this.reservas.map(r =>
-            r.id === reservaEditada.id ? reservaEditada : r
-        );
-
-        localStorage.setItem("reservas", JSON.stringify(this.reservas));
-
-        if (this.calendario) {
-            this.calendario.setearReservas(this.reservas);
-        }
-
-        this.modal.hide();
-    }
-
+        document.getElementById("btnCrearReserva").textContent = "Guardar cambios";
+    }  
+    
     validarFecha(reserva) {
         const hoy = new Date();
         hoy.setHours(0,0,0,0);

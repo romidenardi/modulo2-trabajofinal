@@ -44,10 +44,9 @@ export default class Calendario {
             btnEditarReserva.textContent = "Editar";
 
             btnEditarReserva.addEventListener("click", () => {
-                if (this.onEdit) {
-                    this.onEdit(reserva);
-                    }
-                });
+                localStorage.setItem("reservaAEditar", JSON.stringify(reserva));
+                window.location.href = "../index.html";
+            });
 
             const btnEliminarReserva = document.createElement("button");
             btnEliminarReserva.textContent = "Eliminar";

@@ -44,7 +44,8 @@
         <section>
             <h2>Crear reserva</h2>
             <form id="formReserva">
-                 <fieldset>
+                <input type="hidden" name="id">
+                <fieldset>
                     <legend>Seleccioná la sala</legend>
                     <div class="seleccion-sala">
                         <img class="imagen-principal" id="imagenPrincipal" src="assets/sum.JPG" alt="SUM">
@@ -102,51 +103,12 @@
                     <div class="botones-form">
                         <button type="reset" aria-label="Resetear formulario">Resetear</button>
                         <button id="btnCrearReserva" type="submit" aria-label="Enviar formulario">Reservar</button>
+                        <button aria-label="Ver reservas">
+                            <a href="pages/calendario.html">Ver reservas</a>
+                        </button>
                     </div>
                 </fieldset>
-            </form>
-            <div class="modal fade" id="modalEditar" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form id="formEditar">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Editar reserva</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <input type="hidden" name="id">
-                                <label>Sala</label>
-                                <select name="sala" class="form-select">
-                                    <option value="SUM">SUM</option>
-                                    <option value="Auditorio">Auditorio</option>
-                                    <option value="Comisión Directiva">Comisión Directiva</option>
-                                </select>
-                                <label>Fecha</label>
-                                <input type="date" name="fecha" class="form-control">
-                                <label>Inicio</label>
-                                <input type="time" name="inicio" class="form-control">
-                                <label>Fin</label>
-                                <input type="time" name="fin" class="form-control">
-                                <label>Tema</label>
-                                <input type="text" name="tema" class="form-control">
-                                <label>Usuario</label>
-                                <input type="text" name="usuario" class="form-control">
-                                <label>Servicios</label><br>
-                                <input type="checkbox" name="servicios" value="Cafetería"> Cafetería<br>
-                                <input type="checkbox" name="servicios" value="Desayuno"> Desayuno<br>
-                                <input type="checkbox" name="servicios" value="Merienda"> Merienda<br>
-                                <input type="checkbox" name="servicios" value="Almuerzo"> Almuerzo<br>
-                                <input type="checkbox" name="servicios" value="Cena"> Cena<br>
-                                <label>Comentarios</label>
-                                <textarea name="comentarios" class="form-control"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            </form>        
         </section>
     </main>
     <footer>
