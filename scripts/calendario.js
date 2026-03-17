@@ -2,21 +2,17 @@ import Reserva from "./reserva.js";
 
 export default class Calendario {
 
-    constructor(elementoLista, onChange) {
+    constructor(elementoLista, onChange, onEdit) {
         this.lista = elementoLista;
         this.reservas = [];
         this.onChange = onChange;
+        this.onEdit = onEdit;
     }
 
     setearReservas(reservas) {
         this.reservas = reservas;
         this.render();
     } 
-
-    agregarReserva(reserva) {
-        this.reservas.push(reserva);
-        this.render();
-    }
 
     eliminarReserva(id) {
         this.reservas = this.reservas.filter(r => r.id !== id);
@@ -48,19 +44,10 @@ export default class Calendario {
             btnEditarReserva.textContent = "Editar";
 
             btnEditarReserva.addEventListener("click", () => {
-                const nuevoTema = prompt("Editar tema:", reserva.tema);
-                if (nuevoTema && nuevoTema.trim() !== "") {
-                    this.reservas = this.reservas.map(r => 
-                        r.id === reserva.id
-                            ? new Reserva({ ...r, tema: nuevoTema.trim() })
-                            : r
-                    );
-                    if (this.onChange) {
-                        this.onChange(this.reservas);
+                if (this.onEdit) {
+                    this.onEdit(reserva);
                     }
-                    this.render();
-                }
-            });
+                });
 
             const btnEliminarReserva = document.createElement("button");
             btnEliminarReserva.textContent = "Eliminar";

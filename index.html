@@ -50,7 +50,7 @@
                         <img class="imagen-principal" id="imagenPrincipal" src="assets/sum.JPG" alt="SUM">
                         <div class="salas">
                             <label for="salaSum">
-                                <input id="salaSum" type="radio" name="sala" value="SUM" required>
+                                <input id="salaSum" type="radio" name="sala" value="SUM Osvaldo Acastello" required>
                                 <img class="miniatura" data-radio="salaSum" src="assets/sum.JPG" alt="SUM">
                                 SUM Osvaldo Acastello
                             </label><br>
@@ -60,7 +60,7 @@
                                 Auditorio
                             </label><br>
                             <label for="salaComision">
-                                <input id="salaComision" type="radio" name="sala" value="Comisión Directiva">
+                                <input id="salaComision" type="radio" name="sala" value="Sala de Comisión Directiva">
                                 <img class="miniatura" data-radio="salaComision" src="assets/comision-directiva.JPG" alt="Comisión Directiva">
                                 Sala de Comisión Directiva
                             </label><br>                     
@@ -69,7 +69,7 @@
                 </fieldset>
                 <fieldset>
                     <legend>Completá los datos de la reserva</legend>
-                    <label for="fecha">Fecha</label>
+                    <label for="inputFecha">Fecha</label>
                     <input id="inputFecha" type="date" name="fecha" required><br> 
                     <label for="inicio">Hora de inicio</label>
                     <input id="inputHoraInicio" type="time" name="inicio" required><br>
@@ -82,7 +82,7 @@
                 </fieldset>
                 <fieldset>
                     <legend>Seleccioná los servicios de cocina contratados</legend>
-                    <input id="servCafeteria" type="checkbox" name="servicios" value="Cafeteria">
+                    <input id="servCafeteria" type="checkbox" name="servicios" value="Cafetería">
                     <label for="servCafeteria">Cafetería</label><br>
                     <input id="servDesayuno" type="checkbox" name="servicios" value="Desayuno">
                     <label for="servDesayuno">Desayuno</label><br>
@@ -105,6 +105,48 @@
                     </div>
                 </fieldset>
             </form>
+            <div class="modal fade" id="modalEditar" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="formEditar">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Editar reserva</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id">
+                                <label>Sala</label>
+                                <select name="sala" class="form-select">
+                                    <option value="SUM">SUM</option>
+                                    <option value="Auditorio">Auditorio</option>
+                                    <option value="Comisión Directiva">Comisión Directiva</option>
+                                </select>
+                                <label>Fecha</label>
+                                <input type="date" name="fecha" class="form-control">
+                                <label>Inicio</label>
+                                <input type="time" name="inicio" class="form-control">
+                                <label>Fin</label>
+                                <input type="time" name="fin" class="form-control">
+                                <label>Tema</label>
+                                <input type="text" name="tema" class="form-control">
+                                <label>Usuario</label>
+                                <input type="text" name="usuario" class="form-control">
+                                <label>Servicios</label><br>
+                                <input type="checkbox" name="servicios" value="Cafetería"> Cafetería<br>
+                                <input type="checkbox" name="servicios" value="Desayuno"> Desayuno<br>
+                                <input type="checkbox" name="servicios" value="Merienda"> Merienda<br>
+                                <input type="checkbox" name="servicios" value="Almuerzo"> Almuerzo<br>
+                                <input type="checkbox" name="servicios" value="Cena"> Cena<br>
+                                <label>Comentarios</label>
+                                <textarea name="comentarios" class="form-control"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
     <footer>
