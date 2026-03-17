@@ -1,156 +1,116 @@
+import Reserva from "./reserva.js";
+import Calendario from "./calendario.js";
 
-const reservas = [];
-window.reservas = reservas;
+class App {
 
-const form = document.getElementById("formReserva");
-const lista = document.getElementById("listaReservas");
+    constructor() {
+        this.form = document.getElementById("formReserva");
+        const lista = document.getElementById("listaReservas");
+        this.reservas = [];
+        this.calendario = lista 
+        ? new Calendario(lista, (reservasActualizadas) => {
+            this.reservas = reservasActualizadas;
+            localStorage.setItem("reservas", JSON.stringify(this.reservas));
+        })
+        : null;
+        this.init();
+    }
 
-function render() {
+    init() {
 
-    lista.innerHTML = "";
+        if (this.form) {
 
-    reservas.sort((a, b) => {
-        if (a.fecha === b.fecha) {
-            return a.horaInicio.localeCompare(b.horaInicio);
-        }
-        return a.fecha.localeCompare(b.fecha);
-    });
+                this.form.addEventListener("submit", (event) => {
+                    event.preventDefault();
+                    this.crearReserva();
+                });
 
-    reservas.forEach((reserva) => {
+            const imagenPrincipal = document.getElementById("imagenPrincipal");
 
-        const elementoLista = document.createElement("li");
-
-        const span = document.createElement("span");
-
-        const listaServicios = reserva.servicios.length
-        ? reserva.servicios.join(", ")
-        : "Ninguno";
-
-        span.innerHTML = `<strong>${reserva.sala}</strong> | ${reserva.fecha} | ${reserva.horaInicio} - ${reserva.horaFin}<br>
-                            Tema: ${reserva.tema}<br>
-                            Usuario: ${reserva.usuario}<br>
-                            Servicios: ${listaServicios}<br>
-                            Comentarios: ${reserva.comentarios}`;
-        const btnEditarReserva = document.createElement("button");
-        btnEditarReserva.textContent = "Editar";
-
-        btnEditarReserva.addEventListener("click", () => {
-            const nuevoTema = prompt("Editar tema:", reserva.tema);
-            if (nuevoTema && nuevoTema.trim() !== "") {
-                const r = reservas.find(r => r.id === reserva.id);
-                r.tema = nuevoTema.trim();
-                render();
-                }
+            document.querySelectorAll('input[name="sala"]').forEach(radio => {
+                radio.addEventListener("change", function () {
+                    const label = this.closest("label");
+                    const img = label.querySelector(".miniatura");
+                    if (img && imagenPrincipal) {
+                        imagenPrincipal.src = img.src;
+                    }
+                });
             });
-
-        const btnEliminarReserva = document.createElement("button");
-        btnEliminarReserva.textContent = "Eliminar";
-
-        const btnDeshacerEliminacion = document.createElement("button");
-        btnDeshacerEliminacion.textContent = "Deshacer";
-        btnDeshacerEliminacion.style.display = "none";
-
-        let textoActual;
-        let timeoutEliminarReserva;
-
-        btnEliminarReserva.addEventListener("click", () => {
-            textoActual = span.textContent;
-            span.textContent = "Eliminando...";
-            btnDeshacerEliminacion.style.display = "inline";
-            timeoutEliminarReserva = setTimeout(() => {
-                const i = reservas.findIndex(r => r.id === reserva.id);
-                reservas.splice(i, 1);
-                render();
-            }, 5000);
-        });
-
-        btnDeshacerEliminacion.addEventListener("click", () => {
-            clearTimeout(timeoutEliminarReserva);
-            span.textContent = textoActual;
-            btnDeshacerEliminacion.style.display = "none";
-        });
-
-        elementoLista.appendChild(span); 
-        elementoLista.appendChild(btnEditarReserva); 
-        elementoLista.appendChild(btnEliminarReserva);
-        elementoLista.appendChild(btnDeshacerEliminacion);
-
-        lista.appendChild(elementoLista);
-
-    });
-
-}
-
-function crearReserva() {
-
-    const datos = new FormData(form);
-
-    const sala = datos.get("sala");
-    const fecha = datos.get("fecha");
-    const horaInicio = datos.get("inicio");
-    const horaFin = datos.get("fin");
-    const tema = datos.get("tema");
-    const usuario = datos.get("usuario");
-    const servicios = datos.getAll("servicios");
-    const comentarios = datos.get("comentarios") || "Sin comentarios";
-
-    const hoy = new Date();
-    hoy.setHours(0,0,0,0);
-    const fechaReserva = new Date(fecha);
-    if (fechaReserva < hoy) {
-        alert("La fecha de reserva debe ser igual o posterior a la fecha del día");
-        return;
-    }
-
-    if (horaFin <= horaInicio) {
-        alert("La hora de finalización debe ser posterior a la de inicio.");
-        return;
-    }
-
-    const hayConflicto = reservas.some(r =>
-        r.sala === sala &&
-        r.fecha === fecha &&
-        horaInicio < r.horaFin &&
-        horaFin > r.horaInicio
-    );
-
-    if (hayConflicto) {
-        alert(`La sala ${sala} ya tiene una reserva el ${fecha} entre ${horaInicio} y ${horaFin}.`);        
-        return;
-    }
-
-    const reserva = {
-        id: Date.now(),
-        sala,
-        fecha,
-        horaInicio,
-        horaFin,
-        tema,
-        usuario,
-        servicios,
-        comentarios
-    };
-
-    reservas.push(reserva);
-
-    render();
-
-    form.reset();
-}
-
-form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    crearReserva();
-});
-
-const imagenPrincipal = document.getElementById("imagenPrincipal");
-
-document.querySelectorAll('input[name="sala"]').forEach(radio => {
-    radio.addEventListener("change", function () {
-        const label = this.closest("label");
-        const img = label.querySelector(".miniatura");
-        if (img) {
-            imagenPrincipal.src = img.src;
         }
-    });
-});
+
+        const reservasGuardadas = JSON.parse(localStorage.getItem("reservas")) || [];
+        const reservas = reservasGuardadas.map(r => new Reserva(r));
+        this.reservas = reservas;
+
+        if (this.calendario) {
+            this.calendario.setearReservas(this.reservas);
+            }
+        }
+
+    crearReserva() {
+
+        const datos = new FormData(this.form);
+
+        const reserva = new Reserva ({
+            id: Date.now(),
+            sala: datos.get("sala"),
+            fecha: datos.get("fecha"),
+            horaInicio: datos.get("inicio"),
+            horaFin: datos.get("fin"),
+            tema: datos.get("tema"),
+            usuario: datos.get("usuario"),
+            servicios: datos.getAll("servicios"),
+            comentarios: datos.get("comentarios") || "Sin comentarios"
+        });
+
+        if (!this.validarFecha(reserva)) return;
+        if (!this.validarHora(reserva)) return;
+        if (!this.validarConflicto(reserva)) return;
+        
+        this.reservas.push(reserva);
+
+        localStorage.setItem("reservas",JSON.stringify(this.reservas));
+
+        if (this.calendario) {
+            this.calendario.setearReservas(this.reservas);
+        }
+
+        this.form.reset();    
+    }
+
+    validarFecha(reserva) {
+            const hoy = new Date();
+            hoy.setHours(0,0,0,0);
+            const fechaReserva = new Date(reserva.fecha);
+            if (fechaReserva < hoy) {
+                alert("La fecha de reserva debe ser igual o posterior a la fecha del día");
+                return false;
+                }
+            return true;
+        }
+
+    validarHora(reserva) {
+        if (reserva.horaFin <= reserva.horaInicio) {
+            alert("La hora de finalización debe ser posterior a la de inicio.");
+            return false;
+            }
+        return true;    
+    }
+
+    validarConflicto(reserva) {
+        const hayConflicto = this.reservas.some(r =>
+            r.sala === reserva.sala &&
+            r.fecha === reserva.fecha &&
+            reserva.horaInicio < r.horaFin &&
+            reserva.horaFin > r.horaInicio
+        );
+
+        if (hayConflicto) {
+            alert(`La sala ${reserva.sala} ya tiene una reserva el ${reserva.fecha} entre ${reserva.horaInicio} y ${reserva.horaFin}.`);        
+            return false;
+            }
+        return true;
+    }
+}
+
+new App();
