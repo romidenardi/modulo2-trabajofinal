@@ -95,7 +95,7 @@ input, textarea, select {
 }
 
 textarea {
-    max-width: 100%;
+    max-width: 90%;
 }
 
 input[type="radio"], input[type="checkbox"] {
@@ -165,7 +165,7 @@ input[type="radio"]:checked + .miniatura{
 }
 
 .imagen-principal {
-    width: 90%;
+    width: 100%;
     max-width: 400px;
     height: auto;
     display: block;
