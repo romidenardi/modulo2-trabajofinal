@@ -45,24 +45,38 @@ export default class Calendario {
         }
 
         if (reservasFiltradas.length === 0) {
-            this.lista.innerHTML = "<p>No hay reservas vigentes</p>";
+            this.lista.innerHTML = "<p class='alerta'>No hay reservas vigentes</p>";
             return;
         }
 
         reservasFiltradas
+            
             .sort((a, b) => a.fechaHoraInicio.localeCompare(b.fechaHoraInicio))
             .forEach(reserva => {
-                const li = document.createElement("li");
-                const span = document.createElement("span");
-                const listaServicios = reserva.servicios.length
-                ? reserva.servicios.join(", ")
-                : "Ninguno";
-                span.innerHTML = `<strong>${reserva.sala}</strong> | ${reserva.fecha} | ${reserva.horaInicio} - ${reserva.horaFin}<br>
-                            Tema: ${reserva.tema}<br>
-                            Usuario: ${reserva.usuario}<br>
-                            Servicios: ${listaServicios}<br>
-                            Comentarios: ${reserva.comentarios}`;
-            
+
+            const tarjeta = document.createElement("div");
+            tarjeta.className = "tarjeta-reserva";
+
+            const listaServicios = reserva.servicios.length
+            ? reserva.servicios.join(", ")
+            : "Ninguno";
+
+            tarjeta.innerHTML =
+                `<div class="tarjeta-header">
+                    <h3>${reserva.sala}</h3>
+                    <span class="fecha">${reserva.fecha}</span>
+                </div>
+                <div class="tarjeta-body">
+                    <p><strong>Horario:</strong> ${reserva.horaInicio} - ${reserva.horaFin}</p>
+                    <p><strong>Tema:</strong> ${reserva.tema}</p>
+                    <p><strong>Usuario:</strong> ${reserva.usuario}</p>
+                    <p><strong>Servicios:</strong> ${listaServicios}</p>
+                    <p><strong>Comentarios:</strong> ${reserva.comentarios}</p>
+                </div>`;
+
+            const acciones = document.createElement("div");
+            acciones.className = "tarjeta-acciones";
+           
             const btnEditarReserva = document.createElement("button");
             btnEditarReserva.textContent = "Editar";
 
@@ -81,7 +95,7 @@ export default class Calendario {
             let timeoutEliminarReserva;
 
             btnEliminarReserva.addEventListener("click", () => {
-                span.innerHTML = "Eliminando...";
+                tarjeta.classList.add= ("Eliminando...");
                 btnEliminarReserva.disabled = true;
                 btnEditarReserva.disabled = true;
                 btnDeshacerEliminacion.style.display = "inline";
@@ -97,12 +111,13 @@ export default class Calendario {
                 this.render();
             };
 
-            li.appendChild(span); 
-            li.appendChild(btnEditarReserva); 
-            li.appendChild(btnEliminarReserva);
-            li.appendChild(btnDeshacerEliminacion);
+            acciones.appendChild(btnEditarReserva); 
+            acciones.appendChild(btnEliminarReserva);
+            acciones.appendChild(btnDeshacerEliminacion);
 
-            this.lista.appendChild(li);
+            tarjeta.appendChild(acciones);
+
+            this.lista.appendChild(tarjeta);
         });
     }
 }

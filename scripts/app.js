@@ -50,8 +50,12 @@
                     const img = label?.querySelector(".miniatura");
 
                     if (img && imagenPrincipal) {
+                        imagenPrincipal.classList.add("fade-out");
+                        setTimeout (() => {
                         imagenPrincipal.src = img.src;
-                    }
+                        imagenPrincipal.classList.remove("fade-out");
+                        },300);
+                     }
                 });
             });
 
