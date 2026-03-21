@@ -63,14 +63,13 @@ ul {
     padding-left: 0;
 }
 
-a {
+.navbar .nav-link, .navbar .navbar-brand, .navbar .nav-link:visited, .navbar .navbar-brand:visited {
     text-decoration: none;
-    color: var(--gris-claro);
-}
+    color: var(--semi-blanco);
+}   
 
-a:hover {
-    text-decoration: none;
-    color: var(--verde-medio);
+.navbar .nav-link:hover, .navbar .navbar-brand:hover {
+    color: var(--verde-claro);
 }
 
 small {
@@ -109,7 +108,8 @@ label {
 button, .botones {
     padding: 0.8rem;
     background-color: var(--verde-oscuro);
-    color:  var(--gris-claro);
+    color:  var(--gris-claro) !important;
+    text-decoration: none !important;
     border: none;
     border-radius: 0.375rem;
     margin: 0.5rem;
@@ -117,11 +117,8 @@ button, .botones {
 
 button:hover, .botones:hover {
     background-color: var(--verde-medio);
-}
-
-button a:hover, .botones a:hover {
-    color: var(--verde-claro);
-}
+    color: var(--semi-blanco);
+    }
 
 button:disabled {
     background-color: var(--gris-oscuro);

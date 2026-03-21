@@ -18,7 +18,6 @@
                         this.reservas = reservasActualizadas;
                         localStorage.setItem("reservas", JSON.stringify(this.reservas));
                     },
-                    (reserva) => this.cargarReservaEnFormulario(reserva)
                 )
                 : null;
 

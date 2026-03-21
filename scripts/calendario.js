@@ -2,11 +2,10 @@ import Reserva from "./reserva.js";
 
 export default class Calendario {
 
-    constructor(elementoLista, onChange, onEdit) {
+    constructor(elementoLista, onChange) {
         this.lista = elementoLista;
         this.reservas = [];
         this.onChange = onChange;
-        this.onEdit = onEdit;
         this.filtroSala = document.getElementById("filtroSala");
         this.filtroFecha = document.getElementById("filtroFecha");
         this.filtroSala?.addEventListener("change", () => this.render());
@@ -45,7 +44,7 @@ export default class Calendario {
         }
 
         if (reservasFiltradas.length === 0) {
-            this.lista.innerHTML = "<li class='alerta'>No hay reservas vigentes</li>";
+            this.lista.innerHTML = "<div class='alerta'>No hay reservas vigentes</div>";
             return;
         }
 
@@ -95,7 +94,7 @@ export default class Calendario {
             let timeoutEliminarReserva;
 
             btnEliminarReserva.addEventListener("click", () => {
-                tarjeta.classList.add= ("eliminando");
+                tarjeta.classList.add("eliminando");
                 btnEliminarReserva.disabled = true;
                 btnEditarReserva.disabled = true;
                 btnDeshacerEliminacion.style.display = "inline";
