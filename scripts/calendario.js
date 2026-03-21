@@ -45,7 +45,7 @@ export default class Calendario {
         }
 
         if (reservasFiltradas.length === 0) {
-            this.lista.innerHTML = "<p class='alerta'>No hay reservas vigentes</p>";
+            this.lista.innerHTML = "<li class='alerta'>No hay reservas vigentes</li>";
             return;
         }
 
@@ -95,7 +95,7 @@ export default class Calendario {
             let timeoutEliminarReserva;
 
             btnEliminarReserva.addEventListener("click", () => {
-                tarjeta.classList.add= ("Eliminando...");
+                tarjeta.classList.add= ("eliminando");
                 btnEliminarReserva.disabled = true;
                 btnEditarReserva.disabled = true;
                 btnDeshacerEliminacion.style.display = "inline";

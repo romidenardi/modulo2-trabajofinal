@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CCIRR | Reserva de salas</title>
+    <link rel="icon" type="image/x-icon" href="assets/ccirr-color.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/styles.css">
 </head>
@@ -50,19 +51,19 @@
                     <div class="seleccion-sala">
                         <img class="imagen-principal" id="imagenPrincipal" src="assets/sum.JPG" alt="SUM">
                         <div class="salas">
-                            <label for="salaSum">
+                            <label class="opcion-sala">
                                 <input id="salaSum" type="radio" name="sala" value="SUM Osvaldo Acastello" required>
-                                <img class="miniatura" data-radio="salaSum" src="assets/sum.JPG" alt="SUM">
+                                <img class="miniatura" src="assets/sum.JPG" alt="SUM">
                                 SUM Osvaldo Acastello
                             </label><br>
-                            <label for="salaAuditorio">
+                            <label class="opcion-sala">
                                 <input id="salaAuditorio" type="radio" name="sala" value="Auditorio">
-                                <img class="miniatura" data-radio="salaAuditorio" src="assets/auditorio.JPG" alt="Auditorio">
+                                <img class="miniatura" src="assets/auditorio.JPG" alt="Auditorio">
                                 Auditorio
                             </label><br>
-                            <label for="salaComision">
+                            <label class="opcion-sala">
                                 <input id="salaComision" type="radio" name="sala" value="Sala de Comisión Directiva">
-                                <img class="miniatura" data-radio="salaComision" src="assets/comision-directiva.JPG" alt="Comisión Directiva">
+                                <img class="miniatura" src="assets/comision-directiva.JPG" alt="Comisión Directiva">
                                 Sala de Comisión Directiva
                             </label><br>                     
                         </div>
@@ -104,9 +105,7 @@
                         <button type="reset" aria-label="Resetear formulario">Resetear</button>
                         <button id="btnCrearReserva" type="submit" aria-label="Enviar formulario">Reservar</button>
                         <button type="button" id="btnCancelarEdicion" style="display:none;">Cancelar edición</button>
-                        <button aria-label="Ver reservas">
-                            <a href="pages/calendario.html">Ver reservas</a>
-                        </button>
+                        <a class="botones" type="button" href="pages/calendario.html">Ver reservas</a>                      
                     </div>
                 </fieldset>
             </form>

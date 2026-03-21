@@ -17,6 +17,9 @@
     font-family: Montserrat;
     box-sizing: border-box;
     padding: 0;
+}
+
+body {
     color: var(--gris-oscuro);
 }
 
@@ -43,16 +46,9 @@ h3  {
     margin: 0.8rem;
 }
 
-h4, legend {
+legend {
     font-size: 1.2rem;
     color: var(--gris-oscuro);
-    font-weight: bold;
-    margin: 0.8rem;
-}
-
-h5 {
-    font-size: 1.8rem;
-    color: var(--gris-claro);
     font-weight: bold;
     margin: 0.8rem;
 }
@@ -99,8 +95,8 @@ textarea {
 }
 
 input[type="radio"], input[type="checkbox"] {
-  accent-color: var(--verde-oscuro);
-  margin-right: 0.3rem;
+    accent-color: var(--verde-oscuro);
+    margin-right: 0.3rem;
 }
 
 label {
@@ -119,11 +115,11 @@ button, .botones {
     margin: 0.5rem;
 }
 
-button:hover .botones:hover {
+button:hover, .botones:hover {
     background-color: var(--verde-medio);
 }
 
-button a:hover .botones a:hover {
+button a:hover, .botones a:hover {
     color: var(--verde-claro);
 }
 
@@ -144,7 +140,6 @@ input[type="radio"]:checked + .miniatura{
     margin-bottom: 1.6rem;
     margin-left: 1.6rem;
 }
-
 
 /*Galería de salas*/
 
@@ -189,8 +184,12 @@ input[type="radio"]:checked + .miniatura{
 
 .miniatura:hover {
     transform: scale(1.05);
-    box-shadow: var(--gris-medio);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
+}
+
+.opcion-sala {
+    cursor: default;
 }
 
 /*Calendario de reservas*/
@@ -297,4 +296,3 @@ footer {
     background-color: var(--verde-oscuro);
     text-align: center;
 }
-
